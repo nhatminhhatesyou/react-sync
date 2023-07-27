@@ -5,9 +5,7 @@ import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]){8,24}$/;
-
-
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 export default function Form() {
     const userRef = useRef();
@@ -50,18 +48,19 @@ export default function Form() {
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live='assertive'>{errMsg}</p>
             <div className="register">
                 <div className="col-1">
-                    <h2>Sign Up</h2>
+                    <h1>Sign Up</h1>
                     <span>Register and enjoy!</span>
 
+                    {/* FORM */}
                     <form id="form" className='flex flex-col'>
 
+                        {/* USERNAME IPNUT */}
                         <label htmlFor='username'>
                             Username:
                             <FontAwesomeIcon icon={faCheck} className={validName ? "valid" : "hide"} />
                             <FontAwesomeIcon icon={faTimes} className={validName || !user ? "hide" : "invalid"} />
                         </label>
                         <input
-
                             type="text" placeholder='username'
                             id='username'
                             ref={userRef}
@@ -69,11 +68,10 @@ export default function Form() {
                             onChange={(e) => setUser(e.target.value)}
                             required
                             aria-invalid={validName ? "false" : "true"}
-                            aria-describedby='uidnode'
+                            aria-describedby='uidnote'
                             onFocus={() => setUserFocus(true)}
                             onBlur={() => setUserFocus(false)}
                         >
-
                         </input>
                         <p id='uidnote' className={userFocus && user && !validName ? "instructions" : "offscreen"}>
                             <FontAwesomeIcon icon={faInfoCircle} />
@@ -82,15 +80,73 @@ export default function Form() {
                             Letters, numbers, underscores, hyphens allowed.
                         </p>
 
-                        <input type="text" placeholder='password' />
+                        {/* PASSWORD IPNUT */}
+                        <label htmlFor='pwd'>
+                            Password:
+                            <FontAwesomeIcon icon={faCheck} className={validPwd ? "valid" : "hide"} />
+                            <FontAwesomeIcon icon={faTimes} className={validPwd || !pwd ? "hide" : "invalid"} />
+                        </label>
+                        <input
+                            type="password" placeholder='password'
+                            id='pwd'
+                            onChange={(e) => setPwd(e.target.value)}
+                            required
+                            aria-invalid={validPwd ? "false" : "true"}
+                            aria-describedby='pwdnote'
+                            onFocus={() => setPwdFocus(true)}
+                            onBlur={() => setPwdFocus(false)}
+                        />
+                        <p id='pwdnote' className={pwdFocus && !validPwd ? "instructions" : "offscreen"}>
+                            <FontAwesomeIcon icon={faInfoCircle} />
+                            8 to 24 characters. <br />
+                            Must include uppercase and lowercase letters,
+                            a number and a special characters. <br />
+                            Allowed special characters: <span aria-label="exclamation mark">!</span> <span aria-label="at symbol">@</span> <span aria-label="hashtag">#</span> <span aria-label="dollar sign">$</span> <span aria-label="percent">%</span>
+                        </p>
 
-                        <input type="text" placeholder='confirm password' />
+                        {/*CONFIRM PASSWORD IPNUT */}
+                        <label htmlFor="confirm_pwd">
+                            Confirm Password:
+                            <FontAwesomeIcon icon={faCheck} className={validMatch && matchPwd ? "valid" : "hide"} />
+                            <FontAwesomeIcon icon={faTimes} className={validMatch || !matchPwd ? "hide" : "invalid"} />
+                        </label>
+                        <input
+                            placeholder='confirm password'
+                            type="password"
+                            id="confirm_pwd"
+                            onChange={(e) => setMatchPwd(e.target.value)}
+                            value={matchPwd}
+                            required
+                            aria-invalid={validMatch ? "false" : "true"}
+                            aria-describedby="confirmnote"
+                            onFocus={() => setMatchFocus(true)}
+                            onBlur={() => setMatchFocus(false)}
+                        />
+                        <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
+                            <FontAwesomeIcon icon={faInfoCircle} />
+                            Must match the first password input field.
+                        </p>
 
-                        <input type="text" placeholder='phone number' />
+                        {/* EMAIL IPNUT */}
+                        <label htmlFor="email">
+                            Email:
+                        </label>
+                        <input
+                            type="text" placeholder='email'
+                            id="email"
+                        />
 
-                        <button className='btn'>Register</button>
-
+                        {/* RESIGTER BUTTON */}
+                        <button className='btn' disabled={!validName || !validPwd || !validMatch ? true : false}>
+                            Register
+                        </button>
                     </form>
+                    <p>
+                        Already registered?<br />
+                        <span>
+                            <a href="#">Sign In</a>
+                        </span>
+                    </p>
                 </div>
 
                 <div className="col-2">

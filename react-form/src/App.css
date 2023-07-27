@@ -34,7 +34,8 @@ body {
 }
 
 .register span {
-  color: #adb5bd;
+  color: #82888f;
+  font-size: 1.2em;
 }
 
 #form {
@@ -73,6 +74,11 @@ body {
   margin: auto;
   padding: 3em 0;
 }
+
+.register .col-1 h1 {
+  font-size: 2em;
+}
+
 
 .register .col-2 img {
   width: 480px;
